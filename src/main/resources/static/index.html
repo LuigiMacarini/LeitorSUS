@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Teste OCR com Java </h1>
+
+<p id="demo">Selecione um arquivo para enviar ao servidor Java.</p>
+
+<input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" />
+
+<button type="button" onclick="carregaparaocr()" class="btn_action">Enviar</button>
+
+<script>
+function carregaparaocr() {
+  const input = document.getElementById("avatar");
+
+  if (!input.files.length) {
+    alert("Por favor, selecione um arquivo.");
+    return;
+  }
+
+  const formdata = new FormData();
+  formdata.append("file", input.files[0]);
+
+
+  const requestOptions = {
+    method: 'POST',
+    body: formdata,
+    redirect: 'follow'
+  };
+  console.log("Enviando arquivo para o servidor Java...");
+  fetch("http://192.168.1.86:8888/ocr", requestOptions)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro na resposta do servidor: ' + response.statusText);
+      }
+      return response.text();
+    })
+    .then(result => {
+      console.log(result);
+      alert("Resultado do OCR: " + result);
+    })
+    .catch(error => {
+      console.error('Erro:', error);
+      alert("Erro ao enviar o arquivo.");
+    });
+}
+
+</script>
+
+</body>
+</html>
