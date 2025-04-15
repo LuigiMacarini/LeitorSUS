@@ -29,7 +29,7 @@ function carregaparaocr() {
     redirect: 'follow'
   };
   console.log("Enviando arquivo para o servidor Java...");
-  fetch("http://192.168.1.86:8888/ocr", requestOptions)
+  fetch("http://192.168.3.165:8888/ocr", requestOptions)
     .then(response => {
       if (!response.ok) {
         throw new Error('Erro na resposta do servidor: ' + response.statusText);
