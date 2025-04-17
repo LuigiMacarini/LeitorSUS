@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Fade from '@mui/material/Fade';
 import { FaCamera } from 'react-icons/fa';
+import Camera from './camera';
 
 export default function App() {
   const [expanded, setExpanded] = React.useState(false);
@@ -47,6 +48,7 @@ export default function App() {
           
         >
           <AccordionSummary
+            className="accordionBtn"
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel1-content'
             id='panel1-header'
@@ -71,7 +73,9 @@ export default function App() {
       <button className="btnCamera">
         <FaCamera className="iconCamera" />
         Câmera
+       
       </button>
+      <Camera/>
     </div>
   );
 }
