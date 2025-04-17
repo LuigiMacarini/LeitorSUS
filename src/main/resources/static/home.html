@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leitor de Cartão SUS</title>
+    <link rel="stylesheet" href="/src/styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&display=swap" rel="stylesheet">
+
+
+    <script>
+        function carregaparaocr() {
+            const input = document.getElementById("avatar");
+
+            if (!input.files.length) {
+                alert("Por favor, selecione um arquivo.");
+                return;
+            }
+
+            const formdata = new FormData();
+            formdata.append("file", input.files[0]);
+
+
+            const requestOptions = {
+                method: 'POST',
+                body: formdata,
+                redirect: 'follow'
+            };
+            console.log("Enviando arquivo para o servidor Java...");
+            fetch("http://192.168.3.165:8888/ocr", requestOptions)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na resposta do servidor: ' + response.statusText);
+                    }
+                    return response.text();
+                })
+                .then(result => {
+                    console.log(result);
+                    alert("Resultado do OCR: " + result);
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert("Erro ao enviar o arquivo.");
+                });
+        }
+
+    </script>
+</head>
+
+<header class="">
+
+</header>
+
+<body class="bodyContainer">
+    <div>
+    </div>
+    <h1 class="textHeader">Leitor de Cartão SUS</h1>
+    <h2>Aperte no botão "Camera"</h2>
+    <h2>Apresente o seu cartão</h2>
+    <h2>E espere o seu cartão ser identificado</h2>
+    <button class="btnPhoto" id="btnPhoto">Abrir Camera</button>
+    <video autoplay></video>
+    <canvas></canvas>
+    <button>Tirar foto</button>
+    <script>
+        
+    </script>
+</body>
+<footer>
+</footer>
+
+</html>

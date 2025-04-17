@@ -1,0 +1,10 @@
+body {
+ justify-content: center;
+ align-items: center;
+ background-color: "#408ED4";
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
