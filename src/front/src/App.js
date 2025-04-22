@@ -75,8 +75,11 @@ export default function App() {
         Câmera
        
       </button>
-      <Camera/>
+      <Camera />
+
+     
     </div>
+    
   );
 }
 
