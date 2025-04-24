@@ -2,6 +2,9 @@ import React, { useRef, useState, useEffect } from "react";
 import "./Camera.css";
 import { Zoom } from "@mui/material";
 
+//teste da branch luigi
+
+
 function Camera() {
   const videoRef = useRef(null);
   const photoRef = useRef(null);
