@@ -1,8 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import "./Camera.css";
-import { Zoom } from "@mui/material";
 
-//teste da branch luigi
 
 
 function Camera() {
@@ -11,6 +9,11 @@ function Camera() {
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const validCard = (number) =>{
+    const clenned = number.replace(/\D/g, '');
+    return clenned.length === 15;
+  }
 
 
   useEffect(() => {
@@ -73,6 +76,13 @@ function Camera() {
 
         setResult(await response.text());
         setLoading(false);
+        const resultTxext = await response.text();
+        if (validCard(resultTxext)){
+          setResult(resultTxext.replace(/\D/g, ''));
+        }
+          else{
+            setError("Não foi possível identificar o cartão. Por favor, Tente novamente");
+          }
       }, 'image/png', 1.0);
 
     } catch (err) {
