@@ -1,0 +1,91 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #4a9fe3;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.cardHeader {
+  background-color: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 500px;
+  position: relative;
+  left: -110px;
+}
+.accordionBtn {
+  background-color: #e2b85f;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 18px;
+  color: #333;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btnComoUsar {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btnCamera {
+  background-color: #f8af3c;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: black;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.iconCamera {
+  font-size: 16px;
+}
+
+.instructionsBox {
+  width: 200px;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  padding: 10px;
+  aspect-ratio: 1;
+  height: 200px;
+  position: relative;
+  top: 83px;
+  left: 40px;
+}
+
+.instructionText {
+  margin: 4px 0;
+  font-size: 14px;
+  padding-top: 10px;
+}
