@@ -25,9 +25,10 @@ html {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 500px;
+  width: 505px;
   position: relative;
-  left: -110px;
+  left: -111px;
+  right: 114px;
 }
 .accordionBtn {
   background-color: #e2b85f;
@@ -78,9 +79,9 @@ html {
   box-sizing: border-box;
   padding: 10px;
   aspect-ratio: 1;
-  height: 200px;
+  height: 300px;
   position: relative;
-  top: 83px;
+  top: 60px;
   left: 40px;
 }
 

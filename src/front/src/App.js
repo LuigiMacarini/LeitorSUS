@@ -26,7 +26,10 @@ export default function App() {
               1 - Apresente o seu cartão SUS
             </Typography>
             <Typography className="instructionText">
-              2 - Aguarde o seu Cartão ser identificado
+              2 - Clique no botão "Iniciar Scan"
+            </Typography>
+            <Typography className="instructionText">
+              3 - Após a leitura do cartão clique em "Parar Scan"
             </Typography>
           </header>
         </div>
