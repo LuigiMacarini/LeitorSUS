@@ -11,11 +11,7 @@ function Camera() {
   const [isScanning, setIsScanning] = useState(false);
   const scanIntervalRef = useRef(null);
   const timeoutRef = useRef(null);
-
-  const validCard = (number) => {
-    const clenned = number.replace(/\D/g, "");
-    return clenned.length === 15;
-  };
+ 
 
   useEffect(() => {
     const startCamera = async () => {
@@ -24,9 +20,11 @@ function Camera() {
           video: {
             width: { ideal: 568 },
             height: { ideal: 368 },
-            facingMode: "environment",
-            advanced: [{ focusDistance: 0.1 }],
-          },
+            facingMode: 'environment',
+            advanced: [
+              { focusDistance: 0.1 }
+            ]
+          }
         });
         videoRef.current.srcObject = stream;
       } catch (err) {
@@ -37,7 +35,7 @@ function Camera() {
 
     return () => {
       if (videoRef.current?.srcObject) {
-        videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
+        videoRef.current.srcObject.getTracks().forEach(track => track.stop());
       }
       //limpa os timers
       clearInterval(scanIntervalRef.current);
@@ -57,7 +55,7 @@ function Camera() {
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
 
-      const ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext('2d');
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
       const controller = new AbortController();
@@ -65,46 +63,43 @@ function Camera() {
         controller.abort();
       }, 5000);
 
-      canvas.toBlob(
-        async (blob) => {
-          const formData = new FormData();
-          formData.append("file", blob, "cartao_sus.png");
+      canvas.toBlob(async (blob) => {
+        const formData = new FormData();
+        formData.append('file', blob, 'cartao_sus.png');
 
-          const response = await fetch("http://192.168.3.11:8888/ocr", {
-            method: "POST",
-            body: formData,
-            signal: controller.signal,
-          });
-          clearTimeout(timeoutId);
+        const response = await fetch('http://192.168.3.165:8888/ocr', {
+          method: 'POST',
+          body: formData,
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
 
-          const resultTxext = await response.text();
-          setResult(resultTxext);
+        const resultTxext = await response.text();
+        const validNumber = resultTxext.replace(/\D/g, '');
+
+        if (validNumber.length === 15) {
+          setResult(validNumber);
+          stopAutoScan();
           setLoading(false);
+          return;
+        }
+        
+        setResult(validNumber);
+        setLoading(false);
+        
+        if (isScanning) {
+          setAttempts(prev => prev + 1);
+        }
+        
+        setError("Não foi possível identificar o cartão. Aguarde um momento" +
+          (isScanning ? ` (Tentativa ${attempts + 1} de 4)` : ''));
+      }, 'image/png', 1.0);
 
-          if (isScanning) {
-            setAttempts((prev) => prev + 1);
-          }
-
-          if (validCard(resultTxext)) {
-            setResult(resultTxext.replace(/\D/g, ""));
-            if (isScanning) {
-              stopAutoScan();
-            }
-          } else {
-            setError(
-              "Não foi possível identificar o cartão. Aguarde um momento" +
-                (isScanning ? ` (Tentativa ${attempts + 1} de 4)` : "")
-            );
-          }
-        },
-        "image/png",
-        1.0
-      );
     } catch (err) {
       setError("Erro ao processar a imagem");
       setLoading(false);
       if (isScanning) {
-        setAttempts((prev) => prev + 1);
+        setAttempts(prev => prev + 1);
       }
     }
   };
@@ -121,10 +116,8 @@ function Camera() {
     //1 minuto 4 tentativas
     timeoutRef.current = setTimeout(() => {
       stopAutoScan();
-      if (!validCard(result)) {
-        setError(
-          "Tempo esgotado. Não foi possível identificar o cartão após 4 tentativas."
-        );
+      if (!result) {
+        setError("Tempo esgotado. Não foi possível identificar o cartão após 4 tentativas.");
       }
     }, 60000);
   };
@@ -139,29 +132,23 @@ function Camera() {
       {error && <div className="error-message">{error}</div>}
 
       <div className="camera-preview">
-        <video
-          ref={videoRef}
-          className="video-element"
-          playsInline
-          muted
-          autoPlay
-        />
+        <video ref={videoRef} className="video-element" playsInline muted autoPlay />
         <button
           onClick={isScanning ? stopAutoScan : startAutoScan}
           disabled={loading}
-          className={`capture-button ${loading ? "loading" : ""}`}
+          className={`capture-button ${loading ? 'loading' : ''}`}
         >
-          {isScanning ? "Parar Scan Automático" : "Iniciar Scan Automático"}
+          {isScanning ? 'Parar Scan Automático' : 'Iniciar Scan Automático'}
         </button>
       </div>
 
-      <canvas ref={photoRef} className="hidden-canvas" />
+      <canvas ref={photoRef} className="hidden-canvas"/>
 
       {result && (
         <div className="result-container">
           <h3>Número do CNS:</h3>
           <p className="result-text">{result}</p>
-          {result !== "Não identificado" + { attempts }}
+          {result !== "Não identificado"+ {attempts}}
         </div>
       )}
     </div>
